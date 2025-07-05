@@ -1,0 +1,29 @@
+<!-- templates/dashboard.html -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Your Expenses</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.description.label }} {{ form.description() }}<br>
+        {{ form.amount.label }} {{ form.amount() }}<br>
+        {{ form.submit() }}
+    </form>
+
+    <table class="table mt-3">
+        <thead>
+            <tr><th>Description</th><th>Amount</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.description }}</td>
+                <td>{{ expense.amount }}</td>
+                <td><a href="{{ url_for('delete', id=expense.id) }}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-success" href="{{ url_for('export') }}">Export to Excel</a>
+</div>
+{% endblock %}
